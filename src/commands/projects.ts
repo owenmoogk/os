@@ -1,8 +1,8 @@
-import { Command } from "./CommandTypes"
+import type { Command } from './CommandTypes';
 
 export var openProject: Command = {
-	args: ["*"],
-	functionCall: () => {
-		// ...
-	}
-}
+  args: ['*'],
+  functionCall: () => {
+    // ...
+  },
+};
