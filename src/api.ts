@@ -16,3 +16,17 @@ export function getExternalLinks() {
 	}
 	return data
 }
+
+export async function getProjectList() {
+	var projectList = await fetch(websiteUrl + "/assets/projectDirectory.json")  
+		.then(response => response.json())
+		.then(data => data)
+	return projectList
+}
+
+export async function getProjectData(projectName: string){
+	var projectData = await fetch(websiteUrl + "assets/projects/"+projectName+"/"+projectName+".json")
+		.then(response => response.json())
+		.then(data => data)
+	return projectData
+}

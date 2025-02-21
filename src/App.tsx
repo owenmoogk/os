@@ -1,62 +1,47 @@
 import { useEffect, useState } from 'react';
 import "./css/main.css";
-import { commands } from './commands';
-import { CommandArgs } from './commandFunctions';
-import { commandHandler } from './commandHandler';
-
-var directory: any = {
-	"C:\\owenmoogk.github.io": {
-		"projects": {
-
-		},
-		"work": {
-
-		}
-	}
-}
+import { commandHandler, getFullPathname } from './commandHandler';
+import { Directory, root } from './directory/directory';
 
 function App() {
 
-	const [path, setPath] = useState("C:\\owenmoogk.github.io")
+	const [path, setPath] = useState<Directory>(root)
 	const [outputs, setOutputs] = useState<string[]>([])
-	const [commandStack, setCommandStack] = useState<string[]>([])
+	const [commandHistory, setCommandHistory] = useState<string[]>([])
 
-	function addOutputs(newOutputs: string[]){
-		console.log([...outputs, ...newOutputs])
-		setOutputs([...outputs, ...newOutputs])
+
+	const addOutput = (output: string[]) => {
+		setOutputs((prev) => [...prev, ...output])
 	}
 
 	function handleCommand(text: string){
-		setCommandStack([text, ...commandStack])
-		commandHandler(text, path, setPath, addOutputs)
+		setCommandHistory((prev) => [...prev, ...commandHistory])
+		commandHandler(text, path, setPath, addOutput)
 	}
 
-	if (window) {
-		window.onkeydown = (e) => {
-			var input = document.getElementById("cli-input")
-			if (!input) return;
-			if (e.key == "Enter") return;
-			if (window.getSelection()?.anchorNode?.parentElement == input){
-				return
-			}
-			const range = document.createRange();
-			range.selectNodeContents(input);
-			range.collapse(false);
+	window.onkeydown = (e) => {
+		var input = document.getElementById("cli-input")
+		if (!input) return;
+		if (e.key == "Enter") return;
+		if (window.getSelection()?.anchorNode?.parentElement == input){
+			return
+		}
+		const range = document.createRange();
+		range.selectNodeContents(input);
+		range.collapse(false);
 
-			// Clear existing selection and add the new range
-			const selection = window.getSelection();
-			selection?.removeAllRanges();
-			selection?.addRange(range);
+		// Clear existing selection and add the new range
+		const selection = window.getSelection();
+		selection?.removeAllRanges();
+		selection?.addRange(range);
 
-		};
-	}
+	};
 
+	// TODO: Probably should let the user scroll. Only do this on new commands
 	useEffect(() => {
 		document?.getElementById("cli-output")?.scrollTo(0, document?.getElementById("cli-output")?.scrollHeight ?? 0);
-
 	})
 	
-
 	return (
 		<div className="cli-container">
 			<div className="cli-output" id="cli-output">
@@ -71,7 +56,7 @@ function App() {
 				)}
 			</div>
 			<div className="cli-input">
-				<span className="prompt">{path}&gt;</span>
+				<span className="prompt">{getFullPathname(path)}&gt;</span>
 				<div contentEditable id="cli-input" autoFocus onKeyDown={(e) => {
 					if (e.key == "Enter"){
 						e.preventDefault()
