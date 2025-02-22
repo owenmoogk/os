@@ -70,12 +70,11 @@ function App() {
         : commandHistory[selectedOutputIndex];
   }, [selectedOutputIndex, commandHistory]);
 
-  // TODO: Probably should let the user scroll. Only do this on new commands
   useEffect(() => {
     document
       .getElementById('cli-output')
       ?.scrollTo(0, document.getElementById('cli-output')?.scrollHeight ?? 0);
-  });
+  }, [commandHistory]);
 
   return (
     <div className="cli-container">

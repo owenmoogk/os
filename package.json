@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "concurrently --kill-others \"less-watch-compiler src/less src main.less\" \"vite\"",
+    "start": "concurrently --kill-others \"less-watch-compiler src/less src/css main.less\" \"vite\"",
     "build": "vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
