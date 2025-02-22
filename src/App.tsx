@@ -38,8 +38,6 @@ function App() {
     selection?.addRange(range);
   };
 
-  console.log(selectedOutputIndex);
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
