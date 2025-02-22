@@ -91,7 +91,7 @@ function App() {
     document
       .getElementById('cli-output')
       ?.scrollTo(0, document.getElementById('cli-output')?.scrollHeight ?? 0);
-  }, [commandHistory]);
+  }, [outputs]);
 
   return (
     <div className="cli-container">
