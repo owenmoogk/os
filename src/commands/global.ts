@@ -35,7 +35,7 @@ export const ls: Command = {
   functionCall: (path) => {
     return [
       '../',
-      directories.filter((x) => x.parent == path).map((x) => x.name),
+      ...directories.filter((x) => x.parent == path).map((x) => x.name),
     ].join('    ');
   },
 };

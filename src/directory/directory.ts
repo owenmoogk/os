@@ -1,4 +1,5 @@
 import type { Command } from '../commands/CommandTypes';
+import * as ContactFunctions from '../commands/contact';
 import * as GlobalFunctions from '../commands/global';
 import * as ProjectFunctions from '../commands/projects';
 
@@ -28,7 +29,15 @@ const projects: Directory = {
   },
 };
 
-export const directories = [root, projects];
+const contact: Directory = {
+  name: 'contact',
+  parent: root,
+  commands: {
+    email: ContactFunctions.email,
+  },
+};
+
+export const directories = [root, projects, contact];
 
 export const globalCommands: Partial<Record<string, Command>> = {
   cd: GlobalFunctions.cd,

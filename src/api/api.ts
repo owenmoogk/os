@@ -1,5 +1,6 @@
 export const websiteUrl = 'https://owenmoogk.github.io';
 export const githubUrl = 'https://github.com/owenmoogk';
+export const emailAddress = 'owenmoogk@gmail.com';
 
 const externalLinks: Record<string, string> = {
   website: websiteUrl,
