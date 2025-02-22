@@ -38,10 +38,14 @@ export const projectGithub: Command = {
     if (projects.includes(arg)) {
       const metadata = await getProjectData(arg);
       if (metadata.githubLink) {
-        window.open(`${githubUrl}/${arg}`);
-      } else {
-        return `Project ${arg} does not have an associated GitHub repository.`;
+        window.open(`${githubUrl}/${metadata.githubLink}`);
+        return;
       }
+      if (metadata.githubLink == undefined) {
+        window.open(`${githubUrl}/${arg}`);
+        return;
+      }
+      return `Project ${arg} does not have an associated GitHub repository.`;
     }
   },
 };

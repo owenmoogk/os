@@ -19,7 +19,7 @@ export interface Resources {
 type ProjectMetadata = {
   title: string;
   date: string;
-  githubLink: string;
+  githubLink: string | undefined;
   externalLink: string;
   types: string[];
   description: string;
