@@ -1,4 +1,4 @@
-export var blurb = `Hey, I'm Owen Moogk
+export const blurb = `Hey, I'm Owen Moogk
 
 I'm currently a Mechatronics Engineering student at the University of Waterloo, quite passionate about engineering and design. I made this website to work on my web development skills as well as showcase some work. Check out my projects page for details on personal endeavors with programming, mechanical design, web development, and 3D printing.
 

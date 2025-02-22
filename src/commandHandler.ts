@@ -25,15 +25,15 @@ export function argumentError(
   ]);
 }
 
-export function commandHandler(
+export async function commandHandler(
   input: string,
   path: Directory,
   setPath: (dir: Directory) => void,
   addOutputs: (output: string[]) => void
 ) {
-  var [command, ...args] = input.split(' ');
+  const [command, ...args] = input.split(' ');
 
-  var commandObject = path.commands[command];
+  let commandObject = path.commands[command];
   if (!commandObject) {
     commandObject = globalCommands[command];
   }
@@ -48,7 +48,7 @@ export function commandHandler(
     commandObject.args.includes(args[0]) ||
     commandObject.args.includes('*')
   ) {
-    var output = commandObject.functionCall(path, setPath, args);
+    const output = await commandObject.functionCall(path, setPath, args);
 
     // if there's an output, add the cmd and output, otherwise just add the command
     if (output) addOutputs([getFullPathname(path) + '> ' + input, output]);

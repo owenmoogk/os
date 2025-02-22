@@ -4,7 +4,7 @@ type CommandFunctionCall = (
   path: Directory,
   setPath: (dir: Directory) => void,
   args: string[]
-) => string | void;
+) => string | void | Promise<string | void>;
 
 export type Command = {
   args: string[];

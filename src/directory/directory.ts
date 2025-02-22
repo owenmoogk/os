@@ -8,29 +8,30 @@ export type Directory = {
   commands: Partial<Record<string, Command>>;
 };
 
-export var root: Directory = {
-  name: 'C:\\owenmoogk.github.io',
+export const root: Directory = {
+  name: 'C:\\owenmoogk',
   parent: undefined,
-  commands: {},
+  commands: {
+    about: GlobalFunctions.about,
+    open: GlobalFunctions.open,
+  },
 };
 
-var projects: Directory = {
+const projects: Directory = {
   name: 'projects',
   parent: root,
   commands: {
-    project: ProjectFunctions.openProject,
-    // "projects": ProjectFunctions.listProjects,
-    // "project_list": ProjectFunctions.listProject,
-    // "github": ProjectFunctions.openGithub,
+    open: ProjectFunctions.openProject,
+    list: ProjectFunctions.listProjects,
+    github: ProjectFunctions.projectGithub,
+    details: ProjectFunctions.projectDetails,
   },
 };
 
 export const directories = [root, projects];
 
-export var globalCommands: Partial<Record<string, Command>> = {
+export const globalCommands: Partial<Record<string, Command>> = {
   cd: GlobalFunctions.cd,
   ls: GlobalFunctions.ls,
   help: GlobalFunctions.help,
-  about: GlobalFunctions.about,
-  open: GlobalFunctions.open,
 };

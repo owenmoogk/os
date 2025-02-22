@@ -14,13 +14,13 @@ function App() {
     setOutputs((prev) => [...prev, ...output]);
   };
 
-  function handleCommand(text: string) {
+  async function handleCommand(text: string) {
     setCommandHistory((prev) => [...prev, ...commandHistory]);
-    commandHandler(text, path, setPath, addOutput);
+    await commandHandler(text, path, setPath, addOutput);
   }
 
   window.onkeydown = (e) => {
-    var input = document.getElementById('cli-input');
+    const input = document.getElementById('cli-input');
     if (!input) return;
     if (e.key == 'Enter') return;
     if (window.getSelection()?.anchorNode?.parentElement == input) {
@@ -65,7 +65,7 @@ function App() {
           onKeyDown={(e) => {
             if (e.key == 'Enter') {
               e.preventDefault();
-              handleCommand((e.target as HTMLElement).innerText.trim());
+              void handleCommand((e.target as HTMLElement).innerText.trim());
               (e.target as HTMLElement).innerText = '';
             }
           }}

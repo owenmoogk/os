@@ -5,7 +5,7 @@ import { directories, globalCommands, root } from '../directory/directory';
 const blurb =
   'Hey! Welcome to my website. For the *non* CLI version, go to https://owenmoogk.github.io.';
 
-export var cd: Command = {
+export const cd: Command = {
   args: ['*'],
   functionCall: (path, setPath, args) => {
     const pathInput = args[0];
@@ -30,18 +30,17 @@ export var cd: Command = {
   },
 };
 
-export var ls: Command = {
+export const ls: Command = {
   args: [],
-  functionCall: () => {
-    // TODO: FIx LS
-    // if (args.path == ROOTPATH) {
-    // 	return ROOT_DIR.join("  ")
-    // }
-    return '../';
+  functionCall: (path) => {
+    return [
+      '../',
+      directories.filter((x) => x.parent == path).map((x) => x.name),
+    ].join('    ');
   },
 };
 
-export var help: Command = {
+export const help: Command = {
   args: ['*'],
   functionCall: (path) => {
     return `Commands: ${Object.keys({ ...path.commands, ...globalCommands }).join(', ')}
@@ -50,26 +49,20 @@ export var help: Command = {
   },
 };
 
-export var about: Command = {
+export const about: Command = {
   args: [],
   functionCall: () => {
     return blurb;
   },
 };
 
-export var open: Command = {
-  args: ['website', 'linkedin', 'github'],
+export const open: Command = {
+  args: Object.keys(api.externalLinks),
   functionCall: (_, __, args) => {
-    var arg = args[0];
+    const arg = args[0];
     if (!arg) {
-      return `Usage:
-		open <resource>
-		Resources:
-			${Object.keys(api.externalLinks).join(', ')}
-	`;
+      return `Specify: ${Object.keys(api.externalLinks).join(', ')}`;
     }
-    if (Object.keys(api.externalLinks).includes(arg)) {
-      window.open(api.externalLinks[arg]);
-    } else return `'${arg}' not recognized as an argument to 'open'.`;
+    window.open(api.externalLinks[arg]);
   },
 };

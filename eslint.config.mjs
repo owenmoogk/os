@@ -130,6 +130,7 @@ export default [
             // General ESLint rules
             "no-useless-return": "error",
             "no-console": "warn",
+            "no-var": "error",
             "prefer-const": "error",
             "prefer-promise-reject-errors": "error",
             "prefer-regex-literals": "error",
