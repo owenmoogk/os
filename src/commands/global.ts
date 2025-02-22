@@ -1,7 +1,7 @@
 import type { Command } from './CommandTypes';
 import { api, websiteUrl } from '../api/api';
 import type { Directory } from '../directory/directory';
-import { directories, globalCommands } from '../directory/directory';
+import { directories, globalCommands, root } from '../directory/directory';
 
 const blurb =
   'Hey! Welcome to my website. For the *non* CLI version, go to https://owenmoogk.github.io.';
@@ -59,7 +59,7 @@ export const ls: Command = {
   args: [],
   functionCall: (path) => {
     return [
-      '../',
+      ...(path != root ? ['../'] : []),
       ...directories.filter((x) => x.parent == path).map((x) => x.name),
     ].join('    ');
   },
