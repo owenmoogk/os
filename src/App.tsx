@@ -8,6 +8,7 @@ import { root } from './directory/directory';
 function App() {
   const [path, setPath] = useState<Directory>(root);
   const [outputs, setOutputs] = useState<string[]>([]);
+  const [selectedOutputIndex, setSelectedOutputIndex] = useState<number>();
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
 
   const addOutput = (output: string[]) => {
@@ -15,7 +16,8 @@ function App() {
   };
 
   async function handleCommand(text: string) {
-    setCommandHistory((prev) => [...prev, ...commandHistory]);
+    setCommandHistory((prev) => [...prev, text]);
+    setSelectedOutputIndex(undefined);
     await commandHandler(text, path, setPath, addOutput);
   }
 
@@ -35,6 +37,40 @@ function App() {
     selection?.removeAllRanges();
     selection?.addRange(range);
   };
+
+  console.log(selectedOutputIndex);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          setSelectedOutputIndex((prev) => {
+            if (prev == 0) return 0;
+            return prev ? prev - 1 : commandHistory.length - 1;
+          });
+          break;
+        case 'ArrowDown':
+          setSelectedOutputIndex((prev) => {
+            if (prev == undefined) return undefined;
+            if (prev + 1 < commandHistory.length) return prev + 1;
+            return undefined;
+          });
+          break;
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [commandHistory]);
+
+  useEffect(() => {
+    const ele = document.getElementById('cli-input') as HTMLElement;
+    ele.innerText =
+      selectedOutputIndex == undefined
+        ? ''
+        : commandHistory[selectedOutputIndex];
+  }, [selectedOutputIndex, commandHistory]);
 
   // TODO: Probably should let the user scroll. Only do this on new commands
   useEffect(() => {
