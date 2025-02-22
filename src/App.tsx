@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import './css/main.css';
 import { commandHandler, getFullPathname } from './commandHandler';
+import './css/main.css';
 import type { Directory } from './directory/directory';
 import { root } from './directory/directory';
 
@@ -50,8 +50,10 @@ function App() {
           Welcome to 'owenmoogk.github.io' <br />
           Type 'help' to see a list of commands.
         </div>
-        {outputs.map((text) => (
-          <div className="cli-line">{text}</div>
+        {outputs.map((text, key) => (
+          <div className="cli-line" key={key}>
+            {text}
+          </div>
         ))}
       </div>
       <div className="cli-input">

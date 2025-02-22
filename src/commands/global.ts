@@ -43,7 +43,7 @@ export var ls: Command = {
 
 export var help: Command = {
   args: ['*'],
-  functionCall: (path, setPath, args) => {
+  functionCall: (path) => {
     return `Commands: ${Object.keys({ ...path.commands, ...globalCommands }).join(', ')}
 	Type a command to see arguments
 	`;
@@ -52,24 +52,24 @@ export var help: Command = {
 
 export var about: Command = {
   args: [],
-  functionCall: (path, setPath, args) => {
+  functionCall: () => {
     return blurb;
   },
 };
 
 export var open: Command = {
   args: ['website', 'linkedin', 'github'],
-  functionCall: (path, setPath, args) => {
+  functionCall: (_, __, args) => {
     var arg = args[0];
     if (!arg) {
       return `Usage:
 		open <resource>
 		Resources:
-			${Object.keys(api.getExternalLinks())}
+			${Object.keys(api.externalLinks).join(', ')}
 	`;
     }
-    if (Object.keys(api.getExternalLinks()).includes(arg)) {
-      window.open(api.getExternalLinks()[arg]);
+    if (Object.keys(api.externalLinks).includes(arg)) {
+      window.open(api.externalLinks[arg]);
     } else return `'${arg}' not recognized as an argument to 'open'.`;
   },
 };

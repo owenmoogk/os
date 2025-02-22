@@ -4,9 +4,15 @@ export interface Resources {
   [details: string]: string;
 }
 
-// export function getProject(): Resource {
-// 	return { name: "project", url: "https://example.com/project" };
-// }
+type ProjectMetadata = {
+  title: string;
+  date: string;
+  githubLink: string;
+  externalLink: string;
+  types: string[];
+  description: string;
+  featured: boolean;
+};
 
 export function getExternalLinks() {
   var data: Resources = {
@@ -18,17 +24,15 @@ export function getExternalLinks() {
 }
 
 export async function getProjectList() {
-  var projectList = await fetch(websiteUrl + '/assets/projectDirectory.json')
-    .then(async (response) => response.json())
-    .then((data) => data);
+  const res = await fetch(websiteUrl + '/assets/projectDirectory.json');
+  const projectList = (await res.json()) as string[];
   return projectList;
 }
 
 export async function getProjectData(projectName: string) {
-  var projectData = await fetch(
+  const res = await fetch(
     websiteUrl + 'assets/projects/' + projectName + '/' + projectName + '.json'
-  )
-    .then(async (response) => response.json())
-    .then((data) => data);
+  );
+  const projectData = (await res.json()) as ProjectMetadata;
   return projectData;
 }

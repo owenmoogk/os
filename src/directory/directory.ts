@@ -5,7 +5,7 @@ import * as ProjectFunctions from '../commands/projects';
 export type Directory = {
   name: string;
   parent: Directory | undefined;
-  commands: Record<string, Command>;
+  commands: Partial<Record<string, Command>>;
 };
 
 export var root: Directory = {
@@ -27,7 +27,7 @@ var projects: Directory = {
 
 export const directories = [root, projects];
 
-export var globalCommands: Record<string, Command> = {
+export var globalCommands: Partial<Record<string, Command>> = {
   cd: GlobalFunctions.cd,
   ls: GlobalFunctions.ls,
   help: GlobalFunctions.help,
