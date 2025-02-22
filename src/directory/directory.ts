@@ -15,6 +15,7 @@ export const root: Directory = {
   commands: {
     about: GlobalFunctions.about,
     open: GlobalFunctions.open,
+    work: GlobalFunctions.work,
   },
 };
 

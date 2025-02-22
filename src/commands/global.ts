@@ -1,5 +1,5 @@
 import type { Command } from './CommandTypes';
-import { api } from '../api/api';
+import { api, websiteUrl } from '../api/api';
 import { directories, globalCommands, root } from '../directory/directory';
 
 const blurb =
@@ -64,5 +64,12 @@ export const open: Command = {
       return `Specify: ${Object.keys(api.externalLinks).join(', ')}`;
     }
     window.open(api.externalLinks[arg]);
+  },
+};
+
+export const work: Command = {
+  args: [],
+  functionCall: () => {
+    window.open(`${websiteUrl}/work`);
   },
 };
