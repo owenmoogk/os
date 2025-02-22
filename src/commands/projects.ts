@@ -38,7 +38,7 @@ export const projectGithub: Command = {
     if (projects.includes(arg)) {
       const metadata = await getProjectData(arg);
       if (metadata.githubLink) {
-        window.open(`${githubUrl}/${metadata.githubLink}`);
+        window.open(`${metadata.githubLink}`);
         return;
       }
       if (metadata.githubLink == undefined) {
