@@ -40,11 +40,28 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === 'c') {
+        const ele = document.getElementById('cli-input');
+        ele!.innerText = '';
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
         case 'ArrowUp':
           setSelectedOutputIndex((prev) => {
             if (prev == 0) return 0;
-            return prev ? prev - 1 : commandHistory.length - 1;
+            return prev
+              ? prev - 1
+              : commandHistory.length
+                ? commandHistory.length - 1
+                : undefined;
           });
           break;
         case 'ArrowDown':
