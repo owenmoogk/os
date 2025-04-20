@@ -58,6 +58,7 @@ export const projectDetails: Command = {
       return 'Specify the name of a project to view the details';
     }
     const projects = await getProjectList();
+    console.log(projects);
     if (projects.includes(arg)) {
       const metadata = await getProjectData(arg);
       return `Name: ${metadata.title}

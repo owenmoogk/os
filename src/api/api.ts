@@ -24,12 +24,13 @@ type ProjectMetadata = {
   types: string[];
   description: string;
   featured: boolean;
+  name: string;
 };
 
 export async function getProjectList() {
-  const res = await fetch(websiteUrl + '/assets/projectDirectory.json');
-  const projectList = (await res.json()) as string[];
-  return projectList;
+  const res = await fetch(websiteUrl + '/assets/projects.json');
+  const projectList = (await res.json()) as ProjectMetadata[];
+  return projectList.map((proj) => proj.name);
 }
 
 export async function getProjectData(projectName: string) {
